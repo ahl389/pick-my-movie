@@ -220,7 +220,7 @@ var aliasData = {
 				{"alias":"professor"},
 				{"alias":"professional"},
 				{"alias":"husband"},
-				{"alias":"wife"}
+				{"alias":"wife"},
 			]
 		},
 		{
@@ -296,7 +296,8 @@ var aliasData = {
 				{"alias":"explore"},
 				{"alias":"quest"},
 				{"alias":"search"},
-				{"alias":"find"}
+				{"alias":"find"},
+				{"alias":"travel"},
 			]
 		},
 		{
@@ -328,7 +329,11 @@ var aliasData = {
 				{"alias":"pixar"},
 				{"alias":"spooky"},
 				{"alias":"family"},
-				{"alias":"king"}
+				{"alias":"king"},
+				{"alias":"dragon"},
+				{"alias":"sorcerer"},
+				{"alias":"spell"},
+				
 			]
 		},
 		{
