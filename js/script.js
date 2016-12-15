@@ -389,9 +389,8 @@ $(function(){
 			var poster = baseURL + movieList[resultCount].poster_path;
 	
 			$('.selections').show();
+			$('.mobile-toolbar').show();
 			$('.picker').hide();
-	
-			//$('.heading').text("And the winner is...")
 		 	$('.poster').html('<img src = "' + poster + '">');
 			$('.title').html(movieList[resultCount].title);
 			$('.description').html(movieList[resultCount].overview);

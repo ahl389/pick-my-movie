@@ -232,22 +232,16 @@ a {
 	width: 100%;
 	color: white;
 	text-align: left;
+	display: none;
 }
 
-/*.mobile-toolbar > * {
-	display: inline-block;
-	vertical-align: middle;
-	padding: 15px;
-	margin: 0;
-	box-sizing: border-box;
-}
-*/
 .show-another {
 	background-color: initial;
 	padding: 0;
 	font-size: 1.1em;
 	display: inline-block;
 	vertical-align: middle;
+	cursor: pointer;
 }
 
 .left-mobile-toolbar {
