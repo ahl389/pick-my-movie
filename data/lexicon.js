@@ -1,38 +1,38 @@
 var aliasData = {
 	"keywords":[
-	    {
-           "keyword":"Raunchy",
-           "aliases":[
-               {"alias":"adult humor"},
-               {"alias":"crude"},
-               {"alias":"sarcastic"},
-               {"alias":"profan"},
-               {"alias":"funny"},
-               {"alias":"comedy"},
-               {"alias":"sex"},
-               {"alias":"drugs"},
-               {"alias":"off color"},
-               {"alias":"relationship"},
-               {"alias":"mockumentary"},
-               {"alias":"bachelor"},
-               {"alias":"booze"},
-               {"alias":"bride"},
-               {"alias":"virginity"},
-               {"alias":"seth rogen"},
-               {"alias":"will ferrell"},
-               {"alias":"jonah hill"},
-               {"alias":"jason biggs"},
-               {"alias":"wedding"},
-               {"alias":"ex"},
-               {"alias":"fraternity"},
-               {"alias":"sorority"},
-		       {"alias":"beer"},
-			   {"alias":"slack"}
-           ]
-        },
-        {
-           "keyword":"Nature",
-           "aliases":[
+		{
+		"keyword":"Raunchy",
+		"aliases":[
+				{"alias":"adult humor"},
+				{"alias":"crude"},
+				{"alias":"sarcastic"},
+				{"alias":"profan"},
+				{"alias":"funny"},
+				{"alias":"comedy"},
+				{"alias":"sex"},
+				{"alias":"drugs"},
+				{"alias":"off color"},
+				{"alias":"relationship"},
+				{"alias":"mockumentary"},
+				{"alias":"bachelor"},
+				{"alias":"booze"},
+				{"alias":"bride"},
+				{"alias":"virginity"},
+				{"alias":"seth rogen"},
+				{"alias":"will ferrell"},
+				{"alias":"jonah hill"},
+				{"alias":"jason biggs"},
+				{"alias":"wedding"},
+				{"alias":"ex"},
+				{"alias":"fraternity"},
+				{"alias":"sorority"},
+				{"alias":"beer"},
+				{"alias":"slack"}
+			]
+		},
+		{
+		"keyword":"Nature",
+		"aliases":[
 				{"alias":"nature"},
 				{"alias":"animal"},
 				{"alias":"wildnerness"},
@@ -46,9 +46,9 @@ var aliasData = {
 				{"alias":"life"},
 				{"alias":"plant"},
 				{"alias":"natur"},
-			    {"alias":"ecolog"},
-			    {"alias":"earth"},
-			    {"alias":"planet"},
+				{"alias":"ecolog"},
+				{"alias":"earth"},
+				{"alias":"planet"},
 				{"alias":"environment"},
 				{"alias":"mate"},
 				{"alias":"antarctic"},
@@ -59,51 +59,51 @@ var aliasData = {
 				{"alias":"science"},
 				{"alias":"scientific"},
 				{"alias":"endanger"}   
-           ]
+			]
 		},
 		{
-           "keyword":"Psychological",
-           "aliases":[
-               {"alias":"psychological thriller"},
-               {"alias":"psychological"},
-               {"alias":"myster"},
-               {"alias":"tense"},
-               {"alias":"tension"},
-               {"alias":"nervewracking"},
-               {"alias":"murder"},
-               {"alias":"investigat"},
-               {"alias":"race against time"},
-               {"alias":"suspect"},
-               {"alias":"intrigue"},
-               {"alias":"stalk"},
-               {"alias":"nail-biting"},
-               {"alias":"intense"},
-               {"alias":"escape"},
-               {"alias":"suspense"},
-               {"alias":"serial"},
-               {"alias":"sanity"},
-               {"alias":"insane"},
-               {"alias":"killer"},
-               {"alias":"dead"},
-               {"alias":"paranoid"},
-               {"alias":"suicide"},
-               {"alias":"weird"},
-               {"alias":"unstable"},
-               {"alias":"mental"},
-               {"alias":"violen"},
-               {"alias":"horror"},
-               {"alias":"terror"},
-               {"alias":"cult"},
-               {"alias":"disturb"},
-               {"alias":"psycol"},
-               {"alias":"revenge"},
-               {"alias":"supernat"},
-               {"alias":"psychiat"},
-               {"alias":"amnesia"},
-               {"alias":"innocen"},
-			   {"alias":"disappear"}
-           ]
-        },
+		"keyword":"Psychological",
+		"aliases":[
+				{"alias":"psychological thriller"},
+				{"alias":"psychological"},
+				{"alias":"myster"},
+				{"alias":"tense"},
+				{"alias":"tension"},
+				{"alias":"nervewracking"},
+				{"alias":"murder"},
+				{"alias":"investigat"},
+				{"alias":"race against time"},
+				{"alias":"suspect"},
+				{"alias":"intrigue"},
+				{"alias":"stalk"},
+				{"alias":"nail-biting"},
+				{"alias":"intense"},
+				{"alias":"escape"},
+				{"alias":"suspense"},
+				{"alias":"serial"},
+				{"alias":"sanity"},
+				{"alias":"insane"},
+				{"alias":"killer"},
+				{"alias":"dead"},
+				{"alias":"paranoid"},
+				{"alias":"suicide"},
+				{"alias":"weird"},
+				{"alias":"unstable"},
+				{"alias":"mental"},
+				{"alias":"violen"},
+				{"alias":"horror"},
+				{"alias":"terror"},
+				{"alias":"cult"},
+				{"alias":"disturb"},
+				{"alias":"psycol"},
+				{"alias":"revenge"},
+				{"alias":"supernat"},
+				{"alias":"psychiat"},
+				{"alias":"amnesia"},
+				{"alias":"innocen"},
+				{"alias":"disappear"}
+			]
+		},
 		{
 			"keyword":"Thriller",
 			"aliases":[
@@ -158,12 +158,11 @@ var aliasData = {
 				{"alias":"redemption"},
 				{"alias":"mafia"},
 				{"alias":"mob"}
-
 			]
 		},
 		{
-			"keyword":"Young Adults",
-			"aliases":[
+		"keyword":"Young Adults",
+		"aliases":[
 				{"alias":"young adult"},
 				{"alias":"college student"},
 				{"alias":"student"},
@@ -209,8 +208,8 @@ var aliasData = {
 			]
 		},
 		{
-			"keyword":"Grown Ups",
-			"aliases":[
+		"keyword":"Grown Ups",
+		"aliases":[
 				{"alias":"grown up"},
 				{"alias":"adult"},
 				{"alias":"parent"},
@@ -220,20 +219,20 @@ var aliasData = {
 				{"alias":"professor"},
 				{"alias":"professional"},
 				{"alias":"husband"},
-				{"alias":"wife"},
+				{"alias":"wife"}
 			]
 		},
 		{
-			"keyword":"True Story",
-			"aliases":[
+		"keyword":"True Story",
+		"aliases":[
 				{"alias":"true story"},
 				{"alias":"histor"},
-				{"alias":"real life account"},
+				{"alias":"real life account"}
 			]
 		},
 		{
-			"keyword":"Coming of Age",
-			"aliases":[
+		"keyword":"Coming of Age",
+		"aliases":[
 				{"alias":"coming of age"},
 				{"alias":"growing up"},
 				{"alias":"adolescen"},
@@ -255,7 +254,6 @@ var aliasData = {
 				{"alias":"grow"},
 				{"alias":"overcom"},
 				{"alias":"sweet sixteen"}
-				
 			]
 		},
 		{
@@ -297,12 +295,12 @@ var aliasData = {
 				{"alias":"quest"},
 				{"alias":"search"},
 				{"alias":"find"},
-				{"alias":"travel"},
+				{"alias":"travel"}
 			]
 		},
 		{
-			"keyword":"Fantasy/Adventure",
-			"aliases":[
+		"keyword":"Fantasy/Adventure",
+		"aliases":[
 				{"alias":"adventure"},
 				{"alias":"epic"},
 				{"alias":"voyage"},
@@ -332,8 +330,7 @@ var aliasData = {
 				{"alias":"king"},
 				{"alias":"dragon"},
 				{"alias":"sorcerer"},
-				{"alias":"spell"},
-				
+				{"alias":"spell"}
 			]
 		},
 		{
