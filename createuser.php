@@ -10,15 +10,15 @@ $pass = $_POST['password'];
 $query = 'SELECT * FROM users WHERE username = ?';
 $vars = array($user);
 $rs = $db->Execute($query, $vars);
-$userdata = $rs->fetchRow();
 
-if ($userdata['username'] == ''):
+if ($rs->recordCount() != 0) {
+	echo 'userexists';
+} else {
 	$query = 'INSERT INTO users (username, password) VALUES (?,?)';
 	$hashedPass = password_hash($pass, PASSWORD_BCRYPT);
 	$vars = array($user, $hashedPass);
-	$db->Execute($query, $vars);
+	$rs = $db->Execute($query, $vars);
+	error_log($rs);
 	echo 'Account created for ' . $user;
-else:
-	echo "User with this name already exists, please select a new username."
-endif;
+}
 

@@ -4,30 +4,42 @@
 	<script src="https://use.fontawesome.com/ba4ae401ed.js"></script>
 	<link rel = "stylesheet" href = "css/style.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-
-	<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
-	<script>
-	  // Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyAKdCrorpPNgP34K-byzdMeF8kyHobrtBU",
-	    authDomain: "pick-my-movie.firebaseapp.com",
-	    databaseURL: "https://pick-my-movie.firebaseio.com",
-	    storageBucket: "pick-my-movie.appspot.com",
-	    messagingSenderId: "202655513195"
-	  };
-	  firebase.initializeApp(config);
-	</script>
 </head>
 
 <body>
 <div class = "container">
-	<!-- <nav class = "top-nav">
+	<nav class = "top-nav">
 		<ul class = "ul-top-nav">
 			<li>Movie Picker</li>
-			<li>Start Over</li>
+			<li>Login</li>
+			<li>Create Account</li>
 		</ul>
-	</nav> -->
+	</nav>
+	
+	<div class = "login-create-account">
+		<div class = "account-action-top">
+			<div class = "slider left"></div>
+		
+			<div class = "login account-action active">
+				Login
+			</div>
+		
+			<div class = "create account-action">
+				Create Account
+			</div>
+			
+			<div style = "clear:both"></div>
+		</div>
+		
+		<div class = "account-action-bottom">
+			<form action = "login.php" method = "post" id = "login-create-form">
+				<input name = "username" type = "text" placeholder = "Username">
+				<input name = "password" type = "password" placeholder = "Password">
+				<input type = "submit" id = "account-action-submit" value = "Login">
+			</form>
+			<div class = "login-message"></div>
+		</div>
+	</div>
 	
 	<div class = "selections">
 		<div class = "movie-meta poster">
@@ -140,6 +152,7 @@
 <script src="data/lexicon.js"></script>
 <script src="data/questions.js"></script>
 <script src="js/script.js"></script>
+<script src="js/animations.js"></script>
 
 				
 

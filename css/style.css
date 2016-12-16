@@ -261,6 +261,80 @@ a {
 	padding: 25px;
 }
 
+
+/************** LOGIN ****************/
+.login-create-account {
+	position: fixed;
+	top: 100px;
+	width: 400px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	background-color: #ddd;
+	border-radius: 5px;
+	box-sizing: border-box;
+	box-shadow: 0px 0px 3px 1px #333;
+	z-index: 600;
+}
+
+.account-action-top {
+	width: 100%;
+	border-bottom: 1px solid #ccc;
+	padding: 15px 0px;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.account-action-bottom {
+	padding: 15px;
+}
+
+.account-action {
+	width: 50%;
+	float: left;
+	position: relative;
+	z-index: 10;
+	cursor: pointer;
+	font-weight: 700;
+	color: #777;
+}
+
+.login.active,
+.create.active {
+	color: white;
+}
+
+.slider {
+	background-color: orange;
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	width: 50%;
+	left: 0;
+	bottom: 0;
+}
+
+.slider.left {
+	border-radius: 5px 0px 0px 0px;
+}
+
+.slider.right {
+	border-radius: 0px 5px 0px 0px;
+}
+
+.login-create-account input {
+	border-radius: 5px;
+	color: #555;
+	margin-bottom: 8px;
+	font-size: 1em;
+	-webkit-appearance: none;
+	width: 100%;
+	outline: none;
+	border: none;
+	box-sizing: border-box;
+	padding: 12px 7px;
+}
+
 @media (max-width: 767px){
 	body {
 		padding-bottom: 50px;
