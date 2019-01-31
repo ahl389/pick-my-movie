@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+	<script src="https://use.fontawesome.com/ba4ae401ed.js"></script>
+	<link rel = "stylesheet" href = "css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<div class = "container">
+	<nav class = "top-nav">
+		<ul class = "ul-top-nav">
+			<li>Movie Picker</li>
+			<li>Login</li>
+			<li>Create Account</li>
+		</ul>
+	</nav>
+	
+	<!-- <div class = "login-create-account">
+        <div class = "account-action-top">
+            <div class = "slider left"></div>
+
+            <div class = "login account-action active">
+                Login
+            </div>
+
+            <div class = "create account-action">
+                Create Account
+            </div>
+
+            <div style = "clear:both"></div>
+        </div>
+
+        <div class = "account-action-bottom">
+            <form action = "login.php" method = "post" id = "login-create-form">
+                <input name = "username" type = "text" placeholder = "Username">
+                <input name = "password" type = "password" placeholder = "Password">
+                <input type = "submit" id = "account-action-submit" value = "Login">
+            </form>
+            <div class = "login-message"></div>
+        </div>
+    </div>
+     -->
+	<div class = "selections">
+		<div class = "movie-meta poster">
+		</div>
+		
+		<div class = "meta-left-container">
+			<div class = "movie-meta title">
+			</div>
+		
+			<div class = "movie-meta description">
+			</div>
+		</div>
+	
+		<div style = "clear:both"></div>
+	</div>
+	
+	<div class = "mobile-toolbar">
+		<div class = "left-mobile-toolbar">
+			<div class = "show-another">
+				Show next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+			</div>
+		</div>
+		
+		<a href = "index.html"><div class = "right-mobile-toolbar">
+			<i class="fa fa-undo fa-lg" aria-hidden="true"></i>
+		</div></a>
+	</div>
+	
+	<div class = "picker" >
+		<div class = "question">
+			Animation or Live Action
+		</div>
+	
+		<div class = "left-side">
+			<div data-question-set-id = "qs-1-0-0-0" data-response-id = "r-1-0-0-1" data-response-title = "animation" class = "response selrej">
+				Animation
+			</div>
+		</div>
+	
+		<div class = "right-side">
+			<div data-question-set-id = "qs-1-0-0-0" data-response-id = "r-1-0-0-2" data-response-title = "live action" class = "response selrej">
+				Live Action
+			</div>
+		</div>
+	
+		<div class = "center" style = "display:none">
+			<div data-question-set-id = "qs-1-0-0-0" data-response-id = "r-0-0-0-n" data-response-title = "Neither, show another option" class = "response">
+				Neither, show me another option 
+			</div>
+		</div>
+	</div>
+	
+	<div class = "filters">
+		<div class = "filter-options-container">
+			<div class = "filter-option rating">
+				Rating<br><br>
+				<div class = "filter-choice selected" data-filter-value = "&certification.lte=R">N/A</div>
+				<div class = "filter-choice" data-filter-value = "&certification=G">G</div>
+				<div class = "filter-choice" data-filter-value = "&certification=PG">PG</div>
+				<div class = "filter-choice" data-filter-value = "&certification=PG-13">PG-13</div>
+				<div class = "filter-choice" data-filter-value = "&certification=R">R</div>
+			</div>
+		
+			<div class = "filter-option release-decade">
+				Release Decade<br><br>
+				<div class = "filter-choice selected" data-filter-value = "1900">N/A</div>
+				<div class = "filter-choice" data-filter-value = "1970">< 1980</div>
+				<div class = "filter-choice" data-filter-value = "1980">80's</div>
+				<div class = "filter-choice" data-filter-value = "1990">90's</div>
+				<div class = "filter-choice" data-filter-value = "2000">00's</div>
+				<div class = "filter-choice" data-filter-value = "2010">10's</div>
+			</div>
+		
+			<div class = "filter-option vote-average">
+				Voter Rating<br><br>
+				<div class = "filter-choice selected" data-filter-value = "0">N/A</div>
+				<div class = "filter-choice" data-filter-value = "1">1+</div>
+				<div class = "filter-choice" data-filter-value = "2">2+</div>
+				<div class = "filter-choice" data-filter-value = "3">3+</div>
+				<div class = "filter-choice" data-filter-value = "4">4+</div>
+				<div class = "filter-choice" data-filter-value = "5">5+</div>
+				<div class = "filter-choice" data-filter-value = "6">6+</div>
+				<div class = "filter-choice" data-filter-value = "7">7+</div>
+				<div class = "filter-choice" data-filter-value = "8">8+</div>
+				<div class = "filter-choice" data-filter-value = "9">9+</div>
+				<div class = "filter-choice" data-filter-value = "10">10</div>
+			</div>
+			
+			<div style = "clear:both"></div>
+		</div>
+		
+		<div class = "filter-options-submit">
+			<div class = "filter-submit">
+				<i class="fa fa-arrow-circle-o-right fa-2x" aria-hidden="true"></i>
+			</div>
+			
+			<div class = "spinner">
+				<i class="fa fa-cog fa-spin fa-2x fa-fw"></i>
+			</div>
+		</div>
+		
+		<div style = "clear:both"></div>
+	</div>
+	
+	
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="data/lexicon.js"></script>
+<script src="data/questions.js"></script>
+<script src="js/script.js"></script>
+<script src="js/animations.js"></script>
+
+				
+
+				
+				
+	
