@@ -266,7 +266,7 @@ $(function(){
 	function getMovieList(pagenum=1, voteCount=50) {
 		// showSpinner();
 
-		var url = "http://api.themoviedb.org/3/discover/movie?&api_key=933bee1465a61090ebe0704cd6d4c3e1&with_genres=" + genreIDs + 
+		var url = "https://api.themoviedb.org/3/discover/movie?&api_key=933bee1465a61090ebe0704cd6d4c3e1&with_genres=" + genreIDs + 
 						"&vote_average.gte=" + voteAverage +
 						"&vote_count.gte=" + voteCount + 
 						"&certification_country=US" +
