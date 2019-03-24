@@ -203,15 +203,15 @@ var data = {
 				{
 					"question-set-id":"qs-0-1-drama-0",
 					"called-from":[{"response-id":"r-0-1-drama-n"}],
-					"question": "Based on a True Story or Personal Growth",
+					"question": "Based on a True Story or Coming of Age",
 					"responses": [
 						{
 							"response-id": "r-0-1-drama-truestory",
 							"response":"True Story"
 						},
 						{
-							"response-id": "r-0-1-drama-personalgrowth",
-							"response":"Personal Growth"
+							"response-id": "r-0-2-drama-comingofage",
+							"response":"Coming of Age"
 						},
 					]
 				},
@@ -232,7 +232,7 @@ var data = {
 				},
 				{
 					"question-set-id":"qs-0-2-drama-personalgrowth",
-					"called-from":[{"response-id":"r-0-1-drama-personalgrowth"}],
+					"called-from":[{"response-id":"r-0-1-drama-underdog"}],
 					"question": "Coming of Age or Overcoming Challenges",
 					"responses": [
 						{

@@ -3,34 +3,49 @@ $(function(){
 	/**
 	 * Initialize variables
 	 */	
-	var selections = [];
-	var rejections = [];
-	var genreIDs = [];
-	var genreExclusions = [];
-	var keywordAliases = [];
-	var movieList = [];
-	var showCount = 1;
-	var loop = 0;
-	var rating = '';
-	var releaseDecadeStart = '';
-	var releaseDecadeEnd = '';
-	var voteAverage = '';
+	let selections = [];
+	let rejections = [];
+	let genreIDs = [];
+	let genreExclusions = [];
+	let keywordAliases = [];
+    let scrubbedResults = [];
+	let showCount = 1;
+    let resultNum = 0;
+	let loop = 0;
+    let filters;
+    let optionNum = 0;
 
 
+    const quiz = {
+        selections: [],
+        rejections: [],
+        genreIDs: [],
+        genreExclusions: [],
+        keywordAliases: [],
+        results: []
+    }
+    
+    
 	/**
 	 * Bind click events
 	 */				
 	$('.response').on('click', function(){
 		$(this).addClass('selected');
-		var responseID = $(this).attr('data-response-id').toLowerCase();
-		var rejectedTitle = $(this).parent().siblings().children('.selrej').attr('data-response-title').toLowerCase();
-		var responseTitle = $(this).attr('data-response-title').toLowerCase();
-		responseTitle == 'neither' ? getNextQuestion(responseID) : storeResponse(responseID, responseTitle, rejectedTitle);
+        
+        const questionID = $(this).attr('data-question-id');
+		const selText = $(this).attr('data-text').toLowerCase();
+        const rejText = $(this).siblings('.response.selrej').attr('data-text').toLowerCase();
+
+        if (selText == 'neither') {
+            optionNum += 2
+            getNextQuestion(questionID, true) 
+        } else {
+            storeResponse(questionID, selText, rejText);
+        }
 	});
 
 	$('.show-another').on('click', function(){
-		showResults(showCount);
-		showCount++;
+        updateScreen(scrubbedResults[resultNum]);
 	});
 	
 	
@@ -42,7 +57,8 @@ $(function(){
 	
 	$('.filter-submit').on('click', function(){
 		$(this).hide();
-		storeFilters();
+		filters = storeFilters();
+        getMovieList();
 	});
 
 
@@ -52,10 +68,10 @@ $(function(){
 	 * @param responseTitle - title of selected response, from questions.js
 	 * @param rejectedTitle - title of non-selected response, from questions.js
 	 */	
-	function storeResponse(responseID, responseTitle, rejectedTitle) {
-		selections.push(responseTitle);
-		rejections.push(rejectedTitle);
-		getNextQuestion(responseID);
+	function storeResponse(questionID, selText, rejText) {
+		selections.push(selText);
+		rejections.push(rejText);
+        getNextQuestion(questionID, false);
 	}	
 
 
@@ -64,16 +80,23 @@ $(function(){
 	 * selected by the user.
 	 * @param responseID - ID of selected response, from questions.js
 	 */			
-	function getNextQuestion(responseID) {
-		var nextQuestionFound = null;
-		for (var i = 0; i < data['questions'].length; i++) {
-			for (var j = 0; j < data['questions'][i]['called-from'].length; j++) {
-				if (data['questions'][i]['called-from'][j]['response-id'] == responseID)
-					nextQuestionFound = data['questions'][i];
-			}
-		}
-
-		nextQuestionFound == null ? getGenres() : displayNextQuestion(nextQuestionFound);
+	function getNextQuestion(questionID, neither) {
+        let currentQuestion = unnested.find(question => question.id == questionID)
+       
+        if (currentQuestion.next == null) {
+            getGenres()
+        } else {
+            let another = currentQuestion.next.length > 2 ? true : false;
+            
+            if (optionNum + 2 > currentQuestion.next.length) {
+                optionNum = 0;
+            } 
+            
+            let choice1 = currentQuestion.next[optionNum];
+            let choice2 = currentQuestion.next[optionNum+1];
+           
+            displayNextQuestion(choice1, choice2, another);
+        }
 	}
 	
 
@@ -83,58 +106,37 @@ $(function(){
 	 * @param questionSet - next question set to be displayed based on previous user choice
 	 */	
 	
-	function displayNextQuestion(questionSet){
+	function displayNextQuestion(choice1, choice2, another){
 		$('.response.selected').removeClass('selected');
-		questionSet.responses.length == 3 ? $('.center').show() : $('.center').hide();
-		updateQuestionText(questionSet.question);
-		updateResponses(questionSet.responses)
+		another ? $('.neither').show() : $('.neither').hide();
+        let choices = [choice1, choice2]
+		updateButtons(choices)
 	}
-
-
-	/**
-	 * Displays next question
-	 * Called from displayNextQuestion()
-	 * @param question - next question text
-	 */	
-	
-	function updateQuestionText(question) {
-		$('.question').text(question);
-	}
-
-
+    
+    
 	/**
 	 * Displays response options for next question
 	 * Called from displayNextQuestion()
 	 * @param responses - all responses associated with new question set
 	 */	
 	
-	function updateResponses(responses) {
+	function updateButtons(choices) {
 		var i = 0;
+
 		$('.response').each(function(){
-			if (responses[i])
-				helperUpdateResponses(this, responses[i]);
+			if (i < choices.length) {
+                $(this).text(choices[i].text)
+                $(this).attr('data-text', choices[i].text)
+                $(this).attr('data-question-id', choices[i].id)
+                $(this).siblings('.response.neither').attr('data-question-id', choices[i].pid);
+			}
+            
 			i++;
 		});
 	}
 
 
-	/**
-	 * Helper function for function updateResponses();
-	 * @param el - instance of .response element
-	 * @param response - provided response in question set
-	 */	
 	
-	function helperUpdateResponses(el, response) {
-		if (response.response == 'Neither') {
-			$(el).html('Neither, show me another option <i class="fa fa-arrow-right" aria-hidden="true"></i>');
-		} else {
-			$(el).text(response.response);
-		}
-
-		$(el).attr('data-response-title', response.response)
-		$(el).attr('data-response-id', response['response-id']);
-	}
-
 
 	/**
 	 * Grabs most up to date list of genres the API
@@ -153,6 +155,24 @@ $(function(){
 			}
 		});
 	}
+    
+	/**
+	 * Grabs most up to date list of genres the API
+	 */	
+	function getDBKeywords(movieID){
+		var api = "?api_key=933bee1465a61090ebe0704cd6d4c3e1";
+		var baseURL = "http://api.themoviedb.org/3";
+		var query = `/movie/${movieID}/keywords`;
+		var url = baseURL+query+api;
+
+		$.ajax({
+			url: url,
+			datatype: 'json',
+			success:function(data){
+				console.log(data)
+			}
+		});
+	}
 
 
 	/**
@@ -161,23 +181,17 @@ $(function(){
 	 */	
 	function getGenreID(allGenres){
 		allGenres = allGenres['genres'];
-	
-		for (var i = 0; i < allGenres.length; i++) {
-			if (selections.indexOf(allGenres[i].name.toLowerCase()) != -1) {
-				genreIDs.push(allGenres[i].id);
-			} else if (rejections.indexOf(allGenres[i].name.toLowerCase()) != -1) {
-				genreExclusions.push(allGenres[i].id);
-			}
-		}
 
-		if (genreIDs.length > 1) {
-			genreIDs = genreIDs.join(',');
-		}
-	
-		if (genreExclusions.length > 1) {
-			genreExclusions = genreExclusions.join(',');
-		}
-
+        for (let genre of allGenres) {
+            if (selections.includes(genre.name.toLowerCase())) {
+                genreIDs.push(genre.id);
+            } else if (rejections.includes(genre.name.toLowerCase())) {
+                genreExclusions.push(genre.id);
+            }
+        }
+        
+        genreIDs = genreIDs.toString();
+        genreExclusions.toString();
 		getKeywords();
 	}
 
@@ -186,17 +200,15 @@ $(function(){
 	 * Creates array of all alias words for keywords chosen by user
 	 */	
 	function getKeywords() {
-		for (var j = 0; j < selections.length; j++) {
-			for (var i = 0; i < aliasData['keywords'].length; i++) {
-				if (aliasData['keywords'][i].keyword.toLowerCase() == selections[j]) {
-					var aliases =  aliasData['keywords'][i].aliases;
-					for (var k = 0; k < aliases.length; k++) {
-						keywordAliases.push(aliases[k].alias);
-					}
-				}
-			}
-		}
-		
+        
+        for (let selection of selections) {
+            for (let category of aliasData['categories']) {
+                if (category.keyword.toLowerCase() == selection) {
+                    keywordAliases.push(...category.aliases)
+                }
+            }
+        }
+
 		displayFilters();
 	}
 
@@ -221,24 +233,13 @@ $(function(){
 	 * Store filter preferences
 	 */	
 	function storeFilters() {
-		
-		showSpinner();
-		
-		rating = $('.rating').find('.selected').attr('data-filter-value');
-		voteAverage = $('.vote-average').find('.selected').attr('data-filter-value');
-		releaseDecadeStart= $('.release-decade').find('.selected').attr('data-filter-value');
-		releaseDecadeEnd = parseInt(releaseDecadeStart) + 9;
-
-		var now = new Date();
-		var yyyy = now.getFullYear();
-		
-		releaseDecadeEnd = releaseDecadeEnd > yyyy ? yyyy : releaseDecadeEnd;
-		releaseDecadeEnd = releaseDecadeStart == '1900' ? yyyy : releaseDecadeEnd;
-		releaseDecadeEnd = releaseDecadeStart == '1970' ? '1979' : releaseDecadeEnd;
-		releaseDecadeStart = releaseDecadeStart == '1970' ? '1900' : releaseDecadeStart;
-		
-		
-		getMovieList();
+        const filters = {
+            rating: $('.rating').find('.selected').attr('data-filter-value'),
+            voteAverage: $('.vote-average').find('.selected').attr('data-filter-value'),
+            releaseDecade: $('.release-decade').find('.selected').attr('data-filter-value').split('-')
+        }
+        
+        return filters;
 	}
 	
 	
@@ -263,72 +264,57 @@ $(function(){
 	 * @param pagenum - optional - result page to query
 	 * @param voteCount - optional - minimum number of votes to be included in query
 	 */	
-	function getMovieList(pagenum=1, voteCount=50) {
-		// showSpinner();
-
-		var url = "http://api.themoviedb.org/3/discover/movie?&api_key=933bee1465a61090ebe0704cd6d4c3e1&with_genres=" + genreIDs + 
-						"&vote_average.gte=" + voteAverage +
-						"&vote_count.gte=" + voteCount + 
-						"&certification_country=US" +
-						rating +
+	function getMovieList(movieList = [], pagenum=1) {
+		const url = "https://api.themoviedb.org/3/discover/movie?&api_key=933bee1465a61090ebe0704cd6d4c3e1" +
+                        "&with_genres=" + genreIDs + 
+                        "&without_genres=" + genreExclusions +
+						"&vote_average.gte=" + filters.voteAverage +
+			            "&vote_count.gte=" + 50 +
+						"&certification_country=US" + 
+                        "&certification=" + filters.rating +
 						"&page=" + pagenum + 
-						"&primary_release_date.gte=" + releaseDecadeStart + '-01-01' +
-						"&primary_release_date.lte=" + releaseDecadeEnd + '-12-31';
-						
+						"&primary_release_date.gte=" + filters.releaseDecade[0] + '-01-01' +
+						"&primary_release_date.lte=" + filters.releaseDecade[1] + '-12-31';
+        
+		$.ajax({
+            url: url,
+            datatype: 'json',
+            success:function(data){
 
-		if (pagenum < 39) {
-			$.ajax({
-				url: url,
-				datatype: 'json',
-				success:function(data){
-					for (var i = 0; i < data['results'].length; i++) {
-						getAliasMatches(data['results'][i]);
-					}
-			
-					var totalResults = data['total_results'];
-
-					// if the total results is too low, reduce vote count requirement and try again
-					// else if there are more pages with results, and the movie list is still under 100, try again
-					// else clear duplicates and show results
-					
-					if (totalResults < 20 && loop < 1) {
-						loop++;
-						movieList = [];
-						getMovieList(pagenum, 0);
-					} else if (totalResults > 20*pagenum && movieList.length <= 50) {
-						pagenum++;
-						getMovieList(pagenum, voteCount);
-					} else {
-						scrubDuplicates();
-						
-						setTimeout(function(){
-							hideSpinner();
-							movieList.length > 0 ? showResults() : showError();
-						},900);
-						
-					}
-				},
-				failure:function(error){
-					console.log(error);
-				}
-			});
-		} else {
-			setTimeout(function(){
-				hideSpinner();
-				movieList.length > 0 ? showResults() : showError();
-			},900);
-		}
-
+                if (data['total_results'] > 20*pagenum && movieList.length <= 25 ) {
+                    for (let movie of data['results']) {
+                        screenMovie(movieList, movie);
+                    }
+                    
+                    pagenum++
+                    getMovieList(movieList, pagenum);
+                } else {
+                    scrubbedResults = scrubDuplicates(movieList);
+                    showResponse();
+                }
+            },
+            failure:function(error){
+                showError(error.text);
+            }
+        });
 	}
+    
+    function screenMovie(movieList, movie) {
+        if (keywordAliases.length == 0 || getNumMatches(movie) >= 2) {
+            movieList.push(movie)
+        }
+    }
 
 
 	/**
 	 * Removes any accidental duplicates from movie list
 	 */	
-	function scrubDuplicates() {
-		movieList = movieList.filter(function(elem, pos) {
+	function scrubDuplicates(movieList) {
+		let scrubbedList = movieList = movieList.filter(function(elem, pos) {
 		  return movieList.indexOf(elem) == pos;
 		});
+
+        return scrubbedList;
 	}
 
 
@@ -338,6 +324,7 @@ $(function(){
 	 */	
 	function getToday() {
 		var today = new Date();
+        console.log(today.toISOString());
 		var dd = today.getDate();
 		var mm = today.getMonth()+1; 
 		var yyyy = today.getFullYear();
@@ -354,61 +341,63 @@ $(function(){
 		return today;
 	}
 
+
 	/**
 	 * Loops through alias array to find matches in the summary.  If two or more matches are
 	 * found, the movie is added to the movie list
+     * @param {String}  movie - a JSON representation of a movie
 	 */	
-	function getAliasMatches(movie) {
-		var matchedKeywords = 0;
-		var summary = movie.overview.toLowerCase();
-	
-		if (keywordAliases.length > 0) {
-			for (var j = 0; j < keywordAliases.length; j++) {
-				if (summary.indexOf(keywordAliases[j]) != -1) {
-					matchedKeywords++;
-					if (matchedKeywords >= 2) { 
-						movieList.push(movie);
-						break;
-					}
-				}
+	function getNumMatches(movie) {
+		let numMatches = 0;
+		const summary = movie.overview.toLowerCase();
+
+        for (let alias of keywordAliases) {
+			if (summary.includes(alias)) {
+				numMatches++;
 			}
-		} else {
-			movieList.push(movie);
-		}
+        }
+        
+        return numMatches;
 	}
 
+    function showResponse() {
+		setTimeout(function(){
+            hideSpinner();
+            scrubbedResults.length > 0 ? showMovies() : showError('No movies match your criteria');
+        }, 900);
+    }
 
 	/**
 	 * Displays first result in movie list
 	 */	
-	function showResults(resultCount=0){	
+	function showMovies(){	
 		hideFilters();
-			
-		if (movieList[resultCount]) {
-			var baseURL = 'https://image.tmdb.org/t/p/w500/'
-			var poster = baseURL + movieList[resultCount].poster_path;
-	
-			$('.selections').show();
-			$('.mobile-toolbar').show();
-			$('.picker').hide();
-		 	$('.poster').html('<img src = "' + poster + '">');
-			$('.title').html(movieList[resultCount].title);
-			$('.description').html(movieList[resultCount].overview);
-		}
-
-		resultCount >= movieList.length - 1 ? $('.show-another').hide() : $('.show-another').show();
+        updateScreen(scrubbedResults[resultNum]);
+		resultNum >= scrubbedResults.length - 1 ? $('.show-another').hide() : $('.show-another').show();
 	}
-
+    
+    function updateScreen(movie) {
+        $('.selections').show();
+        $('.mobile-toolbar').show();
+        $('.picker').hide();
+        $('.poster').html(`<img src = "https://image.tmdb.org/t/p/w500/${movie.poster_path}">`);
+        $('.title').html(movie.title);
+        $('.description').html(movie.overview);
+        
+        resultNum++;
+    }
+    
+    
 
 	/**
 	 * Displays error if no movie could be found
 	 */	
-	function showError(){
+	function showError(error){
 		hideFilters();
 		
 		$('.selections').show();
 		$('.picker').hide();
 		$('.show-another').hide();
-		$('.heading').html('<span>No Movies Match Your Criteria :(</span><a href = "index2.html"><br><div style = "margin-top: 50px" class = "button">Try Again</div></a>');
+		$('.heading').html(`<span>${error}</span><a href = "index2.html"><br><div style = "margin-top: 50px" class = "button">Try Again</div></a>`);
 	}
 });

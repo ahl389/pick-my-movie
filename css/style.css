@@ -1,10 +1,16 @@
+body, nav, ul, li, h1, h2, h3, h4, h5 {
+    padding: 0;
+    margin: 0;
+}
+
 body {
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Rockwell', sans-serif;
 	text-align: center;
-	background-color: #3e3e3e;
+	/*background-color: #3e3e3e;*/
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+    color: #555;
 }
 
 button {
@@ -16,56 +22,67 @@ button {
 nav {
 	position: relative;
 	z-index: 500;
+    background-color: white;
+    padding: 20px 25px 10px 25px;
+    width: 100%;
+    box-sizing: border-box;
+    background: rgb(224, 73, 15);
+    color: white;
+}
+
+
+li {
+    list-style-type: none;
 }
 
 a {
 	color: inherit;
 }
-.container {
-	width: 90%;
-	margin: 0 auto;
+
+
+
+.logo {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 50%;
+    float: left;
 }
 
-.left-side, 
-.right-side {
-	position: fixed;
-	top: 0;
-	right: 50%;
-	bottom: 0;
-	left: 0;
-	z-index: 1;
-	text-align: center;
+.right-nav {
+    text-align: right;
+    float: right;
+    width: 50%;
 }
 
-.right-side {
-	left: 50%;
-	right: 0;
-	z-index: 5;
+.right-nav span {
+    margin: 0px 12.5px;
 }
 
-.left-side .response {
-	background-color: rgba(70,188,222,.7);
+.filter-bar {
+    background-color: rgb(15, 185, 224);
+    color: white;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 25px;
+    font-weight: bold;
 }
 
-.left-side .response:hover, .left-side .response.selected {
-	background-color: #46bcde;
+.filter-bar > * {
+    margin-right: 25px;
 }
 
-.right-side .response {
-	background-color: rgba(229,196,84,.7);
-}
-
-.right-side .response:hover, .right-side .response.selected {
-	background-color: #e5c454;
-}
-
-.question {
-	position: relative;
-	margin-top: 200px;
-	z-index: 10;
-	color: white;
-	font-size: 3em;
-	font-weight: 700;
+select {
+    background-color: white;
+    padding: 10px;
+    min-width: 175px;
+    outline: none;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    font-size: 1em;
+    border: none;
+    margin: 5px;
 }
 
 .button,
@@ -74,12 +91,78 @@ a {
 	color: white;
 	border-radius: 6px;
 	display: inline-block;
-	min-width: 100px;
-	margin-top: 400px;
+	margin: 100px 50px 0px 50px;
 	cursor: pointer;
 	letter-spacing: 1px;
 	font-size: 2em;
 	box-sizing: border-box;
+	font-weight: 700;
+    width: 300px;
+}
+
+.container {
+    position: relative;
+}
+
+.back {
+    font-size: 3em;
+    color: red;
+    font-weight: bold;
+    position: fixed;
+    left: 25px;
+    top: 50%;
+    cursor: pointer;
+    display: none;
+}
+
+.panel {
+    width: 100%;
+    background-color: purple;
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -5;
+}
+
+.panel.visible {
+    background-color: orange;
+}
+
+
+.response.right-side {
+	left: 50%;
+	right: 0;
+	z-index: 5;
+	background-color: rgba(15, 185, 224, .7);
+}
+
+.response.left-side {
+    background: rgb(224, 73, 15, .7);
+}
+
+.left-side:hover, .left-side.selected {
+    background: rgb(224, 73, 15, 1);
+}
+
+.right-side:hover, .right-side.selected {
+	background-color: rgba(15, 185, 224, 1);
+}
+
+.response.neither {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 100px;
+    display: none;
+    color: #555;
+}
+
+.question {
+	position: relative;
+	z-index: 10;
+	color: #555;
+	font-size: 3em;
 	font-weight: 700;
 }
 
@@ -88,27 +171,10 @@ a {
 	font-size: 1em;
 }
 
-.center .response {
-	top: 600px;
-	text-align: center;
-	position: fixed;
-	left: 0;
-	width: 100%;
-	color: white;
-	z-index: 300;
-	cursor: pointer;
-	text-transform: none;
-}
-
-.center .response {
-	margin-top: 0;
-	font-size: 1em;
-}
-
 .selections {
 	color: white;
 	position: fixed;
-	top: 100px;
+	top: 200px;
 	left: 5%;
 	right: 5%;
 	z-index: 25;
@@ -125,11 +191,12 @@ a {
 .movie-meta {
 	width: 100%;
 	margin-bottom: 15px;
+    color: #555;
 }
 
 .meta-left-container,
 .movie-meta.poster {
-	width: 45%;
+	width: 50%;
 	float: left;
 	margin-left: 2.5%;
 	margin-right: 2.5%;
@@ -139,8 +206,15 @@ a {
 
 
 .movie-meta.poster {
+    width: 40%;
 	float: right;
 }
+
+.movie-meta.poster img {
+    max-height: 400px;
+    width: auto;
+}
+
 
 .title {
 	font-size: 1.5em;
