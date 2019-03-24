@@ -139,8 +139,23 @@ $(function(){
             quiz.optionNum = 0;
         } 
         
-        const next =   [nextOptions[quiz.optionNum],
-                        nextOptions[quiz.optionNum+1]]
+        let rand = Math.floor(Math.random() * nextOptions.length);
+        let rand2 = Math.floor(Math.random() * nextOptions.length);
+        
+        console.log(rand, rand2);
+        
+        if (rand == rand2) {
+            if (rand2 == nextOptions.length - 1) {
+                rand2 = 0;
+            } else {
+                rand2 += 1;
+            }
+        }
+        
+        console.log(rand, rand2);
+        
+        const next =   [nextOptions[rand],
+                        nextOptions[rand2]]
 
 		displayNext(next, showMore)
 	}
@@ -310,34 +325,7 @@ $(function(){
 	}
 
 	
-	/**
-	 * Shows filters for rating, language, vote average, release year, and sorting preferences
-	 */	
-	function displayFilters() {
-		$('.filters').slideToggle();
-	}
 	
-	
-	/**
-	 * Hide filters for rating, language, vote average, release year, and sorting preferences
-	 */	
-	function hideFilters() {
-		$('.filters').hide();
-	}
-	
-	
-	/**
-	 * Store filter preferences
-	 */	
-	function storeFilters() {
-        const filters = {
-            rating: $('.rating').find('.selected').attr('data-filter-value'),
-            voteAverage: $('.vote-average').find('.selected').attr('data-filter-value'),
-            releaseDecade: $('.release-decade').find('.selected').attr('data-filter-value').split('-')
-        }
-        
-        return filters;
-	}
 	
 	
 	/**
