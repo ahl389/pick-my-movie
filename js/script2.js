@@ -29,6 +29,8 @@ $(function(){
 	$('.container').on('click', '.response', function(){
         const res = $(this);
         res.addClass('selected');
+        
+        if ()
         captureResponse(res);
 	});
     
@@ -39,11 +41,11 @@ $(function(){
 	});
 	
 	
-	$('.filter-submit').on('click', function(){
-		$(this).hide();
-		quiz.filters = storeFilters();
-        getMovieList();
-	});
+	// $('.filter-submit').on('click', function(){
+//         $(this).hide();
+//         quiz.filters = storeFilters();
+//         getMovieList();
+//     });
     
 
 	$('.show-another').on('click', function(){
@@ -101,6 +103,7 @@ $(function(){
     function processResponse(response) {
         if (response.neither) {
             quiz.optionNum += 2
+            roll(response);
         } else {
             quiz.selections.push(response.text);
     		quiz.rejections.push(response.rejectedText);
@@ -139,6 +142,17 @@ $(function(){
             quiz.optionNum = 0;
         } 
         
+        let pair = roll();
+        
+        const next =   [
+                        nextOptions[pair[0]],
+                        nextOptions[pair[1]]
+                        ]
+
+		displayNext(next, showMore)
+	}
+    
+    function roll(){
         let rand = Math.floor(Math.random() * nextOptions.length);
         let rand2 = Math.floor(Math.random() * nextOptions.length);
         
@@ -152,13 +166,10 @@ $(function(){
             }
         }
         
-        console.log(rand, rand2);
+        pair = [rand, rand2]
         
-        const next =   [nextOptions[rand],
-                        nextOptions[rand2]]
-
-		displayNext(next, showMore)
-	}
+        return pair;
+    }
     
     
 	/**
@@ -232,7 +243,7 @@ $(function(){
 	function getGenres(){
         console.log(quiz)
 		var api = "?api_key=933bee1465a61090ebe0704cd6d4c3e1";
-		var baseURL = "http://api.themoviedb.org/3";
+		var baseURL = "https://api.themoviedb.org/3";
 		var query = "/genre/list";
 		var url = baseURL+query+api;
 
