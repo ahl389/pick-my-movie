@@ -37,14 +37,6 @@ $(function(){
 		$(this).addClass('selected');
 		$(this).siblings().removeClass('selected');
 	});
-	
-	
-	// $('.filter-submit').on('click', function(){
-//         $(this).hide();
-//         quiz.filters = storeFilters();
-//         getMovieList();
-//     });
-    
 
 	$('.show-another').on('click', function(){
         updateScreen(quiz.results[resultNum]);
@@ -140,7 +132,7 @@ $(function(){
             quiz.optionNum = 0;
         } 
         
-        let pair = roll();
+        let pair = roll(nextOptions);
         
         const next =   [
                         nextOptions[pair[0]],
@@ -150,11 +142,9 @@ $(function(){
 		displayNext(next, showMore)
 	}
     
-    function roll(){
+    function roll(nextOptions){
         let rand = Math.floor(Math.random() * nextOptions.length);
         let rand2 = Math.floor(Math.random() * nextOptions.length);
-        
-        console.log(rand, rand2);
         
         if (rand == rand2) {
             if (rand2 == nextOptions.length - 1) {
@@ -295,9 +285,7 @@ $(function(){
                 }
             }
         }
-        
-        console.log(allKeywords);
-        
+                
         for (let genre of allGenres) {
             console.log(genre.name + '-' + genre.id)
             if (!allKeywords.includes(genre.name.toLowerCase())) {
@@ -358,7 +346,7 @@ $(function(){
 	 * @param pagenum - optional - result page to query
 	 * @param voteCount - optional - minimum number of votes to be included in query
 	 */	
-	function getMovieList(movieList = [], pagenum=1) {
+	function getMovieList(movieList = [], pagenum=1, index=0) {
 		$.ajax({
             url: getURL(pagenum),
             datatype: 'json',
@@ -368,9 +356,10 @@ $(function(){
                     screenMovie(movieList, movie);
                 }
                     
-                if (data['total_results'] > 20*pagenum && movieList.length <= 50 ) {
-                    pagenum++
-                    getMovieList(movieList, pagenum);
+                if (data['total_results'] > 20*pagenum && movieList.length <= 30 && index < 20) {
+                    pagenum++;
+					index++;
+                    getMovieList(movieList, pagenum, index);
                 } else {
                     quiz.results = scrubDuplicates(movieList);
                     quiz.results.sort(function(a, b){
@@ -482,7 +471,7 @@ $(function(){
 	 * Displays first result in movie list
 	 */	
 	function showMovies(){	
-		hideFilters();
+		//hideFilters();
         updateScreen(quiz.results[resultNum]);
         console.log(quiz.results.length)
         console.log(resultNum)
