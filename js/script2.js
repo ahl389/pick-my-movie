@@ -29,8 +29,6 @@ $(function(){
 	$('.container').on('click', '.response', function(){
         const res = $(this);
         res.addClass('selected');
-        
-        if ()
         captureResponse(res);
 	});
     
