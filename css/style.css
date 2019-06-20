@@ -97,7 +97,11 @@ select {
 	font-size: 2em;
 	box-sizing: border-box;
 	font-weight: 700;
-    width: 300px;
+    width: 350px;
+}
+
+.selrej {
+	position: absolute;
 }
 
 .container {
@@ -132,14 +136,14 @@ select {
 
 
 .response.right-side {
-	left: 50%;
-	right: 0;
+	right: 20%;
 	z-index: 5;
 	background-color: rgba(15, 185, 224, .7);
 }
 
 .response.left-side {
     background: rgb(224, 73, 15, .7);
+	left: 20%;
 }
 
 .left-side:hover, .left-side.selected {
@@ -153,9 +157,14 @@ select {
 .response.neither {
     width: 100%;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 275px;
     display: none;
     color: #555;
+}
+
+.blurry-text {
+   color: transparent;
+   text-shadow: 0 0 5px rgba(255,255,255,0.8);
 }
 
 .question {

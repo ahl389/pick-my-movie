@@ -22,6 +22,7 @@ $(function(){
         }
     }
     
+	let timeout;
     
 	/**
 	 * Bind click and user events
@@ -93,13 +94,16 @@ $(function(){
     function processResponse(response) {
         if (response.neither) {
             quiz.optionNum += 2
-            roll(response);
+			//             newOptions = roll(response);
+			// showRoll(newOptions);
+			
         } else {
             quiz.selections.push(response.text);
     		quiz.rejections.push(response.rejectedText);
+	        
         }
 
-        checkForNext(response);
+		checkForNext(response);
     }
 
 
@@ -115,7 +119,7 @@ $(function(){
         if (nextOptions == null) {
             getGenres()
         } else {
-            getNext(nextOptions)
+            getNext(response, nextOptions)
         }
 	}
 	
@@ -125,7 +129,7 @@ $(function(){
      * then calls next function, displayNext();
 	 * @param {Array}   nextOptions - All possible option objects to be displayed based on previous user choice
 	 */	
-	function getNext(nextOptions){
+	function getNext(response, nextOptions){
         let showMore = nextOptions.length > 2 ? true : false;
         console.log(quiz.optionNum)
         if (quiz.optionNum + 2 > nextOptions.length) {
@@ -138,8 +142,13 @@ $(function(){
                         nextOptions[pair[0]],
                         nextOptions[pair[1]]
                         ]
+						
+		if (response.neither) {
+			showRoll(next, showMore)
+		} else {
+			displayNext(next, showMore);
+		}
 
-		displayNext(next, showMore)
 	}
     
     function roll(nextOptions){
@@ -158,6 +167,68 @@ $(function(){
         
         return pair;
     }
+	
+	function showRoll(newOptions, showMore) {
+        showMore ? $('.response.selected').siblings('.neither').show() : $('.response.selected').siblings('.neither').hide();
+		
+		let i = 0;
+		
+		$('.panel.last .selrej').addClass('blurry-text');
+		
+        $('.left-side').animate({
+		    marginLeft: 53
+		}, 50).animate({
+		    marginLeft: 73
+		}, 50).animate({
+		    marginLeft: 43
+		}, 10).animate({
+		    marginLeft: 63
+		}, 50).animate({
+		    marginLeft: 33
+		}, 50).animate({
+		    marginLeft: 83
+		}, 50).animate({
+		    marginLeft: 43
+		}, 50).animate({
+ 		    marginLeft: 63
+ 		}, 50).animate({
+ 		    marginLeft: 50
+ 		}, 50);
+		
+        $('.right-side').animate({
+ 		    marginRight: 13
+ 		}, 50).animate({
+ 		    marginRight: 53
+ 		}, 50).animate({
+ 		    marginRight: 23
+ 		}, 10).animate({
+ 		    marginRight: 83
+ 		}, 50).animate({
+ 		    marginRight: 33
+ 		}, 50).animate({
+ 		    marginRight: 63
+ 		}, 50).animate({
+ 		    marginRight: 43
+ 		}, 50).animate({
+ 		    marginRight: 73
+ 		}, 50).animate({
+ 		    marginRight: 50
+ 		}, 50, function(){
+			$('.panel.last .selrej').each(function(){
+				if (i < newOptions.length) {
+	                $(this).text(newOptions[i].text)
+	                $(this).attr('data-text', newOptions[i].text)
+	                $(this).attr('data-question-id', newOptions[i].id)
+	                $('.neither').attr('data-question-id', newOptions[i].pid);
+				}
+            
+				i++;
+			});
+			
+			$('.panel.last .selrej').removeClass('blurry-text');
+ 		});
+
+	}
     
     
 	/**
@@ -169,9 +240,9 @@ $(function(){
 	
 	function displayNext(next, showMore) {
         console.log(next)
-        showMore ? $('.response.selected').siblings('.neither').show() : $('.response.selected').siblings('.neither').hide();
+	 	clearTimeout(timeout);
+		$('.panel.last .neither').hide();
         $('.response.selected').removeClass('selected');
-        $('.back').show();
         
 		let i = 0;
         
@@ -186,7 +257,6 @@ $(function(){
         
         panel.removeClass('last');
 
-        
         $('.container').append(newPanel);
         $(newPanel).css('left', width*numPanels);
         
@@ -203,26 +273,14 @@ $(function(){
 
         $('.container').animate({
             left: newDestination
-        }, 1000);
+        }, 750, function(){
+			timeout = setTimeout(function(){
+				showMore ? $('.panel.last .neither').show() : $('.panel.last .neither').hide();
+			}, 5000);
+        });
 
 	}
     
-    function slideBack(){
-        console.log('hello')
-        let current = $('.container').css('left');
-        current = current.replace('px', '');
-        let panel = $('.panel.last');
-        let width = panel.width();
-        let newDestination = current*1 + width;
-        console.log(newDestination)
-
-        $('.container').animate({
-            left: newDestination
-        }, 1000);
-        
-        panel.prev().addClass('last');
-        panel.remove();
-    }
 
 
 	/**
@@ -317,8 +375,6 @@ $(function(){
         }
         
         getMovieList();
-
-		//displayFilters();
 	}
 
 	
@@ -471,16 +527,13 @@ $(function(){
 	 * Displays first result in movie list
 	 */	
 	function showMovies(){	
-		//hideFilters();
-        updateScreen(quiz.results[resultNum]);
-        console.log(quiz.results.length)
-        console.log(resultNum)
-		
+        updateScreen(quiz.results[resultNum]);	
 	}
     
     
     function updateScreen(movie) {
         $('.panel').hide();
+		$('.filter-bar').hide();
         $('.selections').show();
         $('.mobile-toolbar').show();
         $('.picker').hide();
