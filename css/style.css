@@ -4,13 +4,13 @@ body, nav, ul, li, h1, h2, h3, h4, h5 {
 }
 
 body {
-	font-family: 'Rockwell', sans-serif;
+	font-family: 'Fredoka One', cursive;
 	text-align: center;
-	/*background-color: #3e3e3e;*/
+	background-color:#6251a9;
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-    color: #555;
+    color: #ffffff;
 }
 
 button {
@@ -97,7 +97,9 @@ select {
 	font-size: 2em;
 	box-sizing: border-box;
 	font-weight: 700;
-    width: 350px;
+	width: 350px;
+	background-color: #000000;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,.5);
 }
 
 .selrej {
@@ -138,28 +140,28 @@ select {
 .response.right-side {
 	right: 20%;
 	z-index: 5;
-	background-color: rgba(15, 185, 224, .7);
 }
 
 .response.left-side {
-    background: rgb(224, 73, 15, .7);
 	left: 20%;
 }
 
-.left-side:hover, .left-side.selected {
-    background: rgb(224, 73, 15, 1);
+.left-side:hover, 
+.left-side.selected, 
+.right-side:hover, 
+.right-side.selected  {
+    background: rgb(52, 216, 120);
 }
 
-.right-side:hover, .right-side.selected {
-	background-color: rgba(15, 185, 224, 1);
-}
 
 .response.neither {
     width: 100%;
     margin: 0 auto;
     margin-top: 275px;
     display: none;
-    color: #555;
+	color: #ffffff;
+	background-color: initial;
+	box-shadow: none;
 }
 
 .blurry-text {
@@ -170,7 +172,6 @@ select {
 .question {
 	position: relative;
 	z-index: 10;
-	color: #555;
 	font-size: 3em;
 	font-weight: 700;
 }
@@ -200,7 +201,7 @@ select {
 .movie-meta {
 	width: 100%;
 	margin-bottom: 15px;
-    color: #555;
+	font-size: 1.2em;
 }
 
 .meta-left-container,
@@ -221,7 +222,9 @@ select {
 
 .movie-meta.poster img {
     max-height: 400px;
-    width: auto;
+	width: auto;
+	border-radius: 5px;
+	box-shadow: 0px 0px 25px 1px rgba(0,0,0,.5);
 }
 
 

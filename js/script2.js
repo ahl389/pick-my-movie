@@ -17,12 +17,23 @@ $(function () {
         filters: {
             rating: '',
             releaseDecadeStart: 1900,
-            releaseDecadeEnd: 2019,
+            releaseDecadeEnd: getYear(),
             voteAverage: 1
         }
     }
 
     let timeout;
+
+
+    /**
+     * Get current year
+     */
+    function getYear() {
+        const date = new Date();
+        return date.getFullYear();
+    }
+
+
 
 	/**
 	 * Bind click and user events
@@ -94,13 +105,9 @@ $(function () {
     function processResponse(response) {
         if (response.neither) {
             quiz.optionNum += 2
-            //             newOptions = roll(response);
-            // showRoll(newOptions);
-
         } else {
             quiz.selections.push(response.text);
             quiz.rejections.push(response.rejectedText);
-
         }
 
         checkForNext(response);
@@ -131,11 +138,10 @@ $(function () {
 	 */
     function getNext(response, nextOptions) {
         let showMore = nextOptions.length > 2 ? true : false;
-        console.log(quiz.optionNum)
+
         if (quiz.optionNum + 2 > nextOptions.length) {
             quiz.optionNum = 0;
         }
-
 
         const next = roll(nextOptions)
 
@@ -149,7 +155,6 @@ $(function () {
 
     function roll(dice) {
         const option1 = dice[Math.floor(Math.random() * dice.length)];
-
         dice = dice.filter(option => option.id != option1.id)
         const option2 = dice[Math.floor(Math.random() * dice.length)]
 
@@ -225,7 +230,6 @@ $(function () {
 	 * @param {Array}       next - Chosen pair of option objects to be displayed based on previous user choice
      * @param {Boolean}     showMore - A boolean indicating if there are other suboptions to show user
 	 */
-
     function displayNext(next, showMore) {
         console.log(next)
         clearTimeout(timeout);
@@ -264,7 +268,7 @@ $(function () {
         }, 750, function () {
             timeout = setTimeout(function () {
                 showMore ? $('.panel.last .neither').show() : $('.panel.last .neither').hide();
-            }, 5000);
+            }, 3000);
         });
 
     }
@@ -364,9 +368,6 @@ $(function () {
 
         getMovieList();
     }
-
-
-
 
 
 	/**
@@ -492,11 +493,9 @@ $(function () {
     function getNumMatches(movie) {
         let numMatches = 0;
         const summary = movie.overview.toLowerCase();
-        console.log('TITLE: ' + movie.title)
+
         for (let alias of quiz.keywordAliases) {
             if (summary.includes(alias)) {
-                console.log(alias)
-                console.log(summary)
                 numMatches++;
             }
         }
@@ -505,6 +504,7 @@ $(function () {
     }
 
     function showResponse() {
+        showSpinner();
         setTimeout(function () {
             hideSpinner();
             quiz.results.length > 0 ? showMovies() : showError('No movies match your criteria');
